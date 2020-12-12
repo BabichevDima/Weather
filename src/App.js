@@ -1,25 +1,29 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { Component } from "react";
+import { Header } from "./Components/Header";
+import styled from "@emotion/styled";
+import { CurrentWeather } from "./Components/CurrentWeather"
+import { Forecast } from "./Components/Forecast"
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+export class App extends Component {
+  render() {
+    return (
+      <Wrapper>
+        <Header />
+        <CurrentWeather />
+        <Forecast />
+      </Wrapper>
+    );
+  }
 }
 
-export default App;
+const Wrapper = styled.div`
+ height: 100vh;
+ background-color: #55676d;
+ width: 414px;
+ height: 830px;
+ position: absolute;
+ top: 50%;
+ left: 50%;
+ transform: translate(-50%, -50%);
+ padding: 50px 35px 0px 39px;
+`
