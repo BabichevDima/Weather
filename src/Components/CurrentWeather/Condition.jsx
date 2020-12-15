@@ -1,4 +1,4 @@
-import React, { Children, Component } from "react";
+import React, { Component } from "react";
 import styled from "@emotion/styled";
 import Foliage from "../../assets/img/Foliage.png";
 import Path from "../../assets/img/Path.png";
