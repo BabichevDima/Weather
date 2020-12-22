@@ -1,42 +1,21 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import styled from "@emotion/styled";
 import { Condition } from "./Condition";
 
-const getWeatherInNewYork = () => {
-  return fetch(
-    "https://api.weatherapi.com/v1/current.json?key=3460e5548e274bdfb28150601201012&q&q=New_York"
-  );
-};
+export const CurrentWeather = ({ forecast }) => (
+  <div>
+    <WeatherWrapper>
+      <div>
+        <Weather>
+          {`${forecast.current.condition.text}`} {`${forecast.current.temp_c}`}° C
+        </Weather>
+      </div>
+      <Image src={`https:${forecast.current.condition.icon}`} alt="Сondition" />
+    </WeatherWrapper>
 
-export const CurrentWeather = () => {
-  const [data, setData] = useState(null);
-
-  useEffect(() => {
-    getWeatherInNewYork()
-      .then((res) => {
-        return res.json();
-      })
-      .then((data) => {
-        setData(data);
-      });
-  }, []);
-
-  return (
-    <div>
-      <WeatherWrapper>
-        <div>
-          <Title>{}</Title>
-          <Weather>
-            {`${data?.current.condition.text}`} {`${data?.current.temp_c}`}° C
-          </Weather>
-        </div>
-        <Image src={`https:${data?.current.condition.icon}`} alt="Сondition" />
-      </WeatherWrapper>
-
-      <Condition />
-    </div>
-  );
-};
+    <Condition forecast={forecast} />
+  </div>
+);
 
 const WeatherWrapper = styled.div`
   display: flex;

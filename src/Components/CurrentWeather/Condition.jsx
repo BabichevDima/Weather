@@ -1,4 +1,4 @@
-import React, { Component, useEffect, useState } from "react";
+import React from "react";
 import styled from "@emotion/styled";
 import Foliage from "../../assets/img/Foliage.png";
 import Path from "../../assets/img/Path.png";
@@ -10,38 +10,25 @@ const getWeatherInNewYork = () => {
   );
 };
 
-export const Condition = () => {
-  const [data, setData] = useState(null);
-
-  useEffect(() => {
-    getWeatherInNewYork()
-      .then((res) => {
-        return res.json();
-      })
-      .then((data) => {
-        setData(data);
-      });
-  }, []);
-
-  return (
+export const Condition = ({forecast}) => (
     <ConditionWrapper>
       <ConditionItem>
         <ConditionImg src={Foliage} />
-        <ConditionTitle>{`${data?.current.wind_kph}`} kph</ConditionTitle>
+        <ConditionTitle>{`${forecast.current.wind_kph}`} kph</ConditionTitle>
       </ConditionItem>
 
       <ConditionItem>
         <ConditionImg src={Path} />
-        <ConditionTitle>{`${data?.current.humidity}`} %</ConditionTitle>
+        <ConditionTitle>{`${forecast.current.humidity}`} %</ConditionTitle>
       </ConditionItem>
 
       <ConditionItem>
         <ConditionImg src={PathLot} />
-        <ConditionTitle>{`${data?.current.precip_mm}`} mm</ConditionTitle>
+        <ConditionTitle>{`${forecast.current.precip_mm}`} mm</ConditionTitle>
       </ConditionItem>
     </ConditionWrapper>
   );
-};
+;
 
 const ConditionWrapper = styled.div`
   display: flex;

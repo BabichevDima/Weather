@@ -1,34 +1,16 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import styled from "@emotion/styled";
 
-const getWeatherInNewYork = () => {
-  return fetch(
-    "https://api.weatherapi.com/v1/current.json?key=3460e5548e274bdfb28150601201012&q&q=New_York"
-  );
-};
-
-export const Header = () => {
-  const [data, setData] = useState(null);
-
-  useEffect(() => {
-    getWeatherInNewYork()
-      .then((res) => {
-        return res.json();
-      })
-      .then((data) => {
-        setData(data);
-      });
-  }, []);
-
-  return (
-    <HeaderStyled>
-      <Title>{data?.location.name}</Title>
-      <Time>{data?.location.localtime}</Time>
-    </HeaderStyled>
-  );
-};
+export const Header = ({forecast, toggleSearch}) => (
+  <HeaderStyled>
+    <OpenSearchButton onClick={() => toggleSearch(true)}/>
+    <Title>{forecast.location.name}</Title>
+    <Time>{forecast.location.localtime}</Time>
+  </HeaderStyled>
+);
 
 const HeaderStyled = styled.header`
+position: relative;
   text-align: center;
   margin-bottom: 60px;
 `;
@@ -41,4 +23,13 @@ const Title = styled.h1`
 
 const Time = styled.span`
   color: #000;
+`;
+
+const OpenSearchButton = styled.div`
+position: absolute;
+height:30px;
+width: 30px;
+background-color: red;
+top: 30px;
+right: 30px;
 `;

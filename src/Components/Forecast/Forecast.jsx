@@ -1,44 +1,43 @@
 import React, { useState, useEffect } from "react";
 import styled from "@emotion/styled";
 
-const getWeatherInNewYork = () => {
+const getForecast = (coordinate="New_York") => {
   return fetch(
-    "https://api.weatherapi.com/v1/forecast.json?key=3460e5548e274bdfb28150601201012&q&q&q=New_York&days=3"
+    `https://api.weatherapi.com/v1/forecast.json?key=3460e5548e274bdfb28150601201012&q=${coordinate}&days=3`
   );
 };
 
-export const Forecast = () => {
+export const Forecast = ({coordinate}) => {
   const [data, setData] = useState(null);
 
   useEffect(() => {
-    getWeatherInNewYork()
+    getForecast(coordinate)
       .then((res) => {
         return res.json();
       })
       .then((data) => {
         setData(data);
       });
-  }, []);
+  }, [coordinate]);
 
-  const forcastDay = data ? data.forecast.forecastday: [];
-  console.log(
-    "🚀 ~ file: Forecast.jsx ~ line 24 ~ Forecast ~ numbers",
-    forcastDay
-  );
-
-  const forcastWeatherDay = forcastDay.map((weatherDay) => (
-    <DailyItem>
-      <Day>{`${weatherDay.date}`}</Day>
-      <Img src={`https:${weatherDay.day.condition.icon}`} alt="Condition" />
-      <Temperature>{`${weatherDay.day.avgtemp_c}`}° C</Temperature>
-    </DailyItem>
-  ));
+  const forecastDay = data ? data.forecast.forecastday : [];
 
   return (
     <Weather>
       <Title>Forecast</Title>
 
-      <DailyForcast>{forcastWeatherDay}</DailyForcast>
+      <DailyForcast>
+        {forecastDay.map((weatherDay) => (
+          <DailyItem key={weatherDay.date_epoch}>
+            <Day>{`${weatherDay.date}`}</Day>
+            <Img
+              src={`https:${weatherDay.day.condition.icon}`}
+              alt="Condition"
+            />
+            <Temperature>{`${weatherDay.day.avgtemp_c}`}° C</Temperature>
+          </DailyItem>
+        ))}
+      </DailyForcast>
 
     </Weather>
   );
