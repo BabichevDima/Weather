@@ -1,26 +1,42 @@
-import React, { Component } from "react";
+import React, { useEffect, useState } from "react";
 import styled from "@emotion/styled";
-import { Condition } from "./Condition"
-import Sunny from "../../assets/img/Sunny.png"
+import { Condition } from "./Condition";
 
-export class CurrentWeather extends Component {
-  render() {
-    return (
-      <div>
-        <WeatherWrapper>
-          <div>
-            <Title>Now</Title>
-            <Weather>Sunny 24° C</Weather>
-          </div>
-          <Image src= {Sunny} alt="Sunny"/>
-        </WeatherWrapper>
+const getWeatherInNewYork = () => {
+  return fetch(
+    "https://api.weatherapi.com/v1/current.json?key=3460e5548e274bdfb28150601201012&q&q=New_York"
+  );
+};
 
-        <Condition />
+export const CurrentWeather = () => {
+  const [data, setData] = useState(null);
 
-      </div>
-    );
-  }
-}
+  useEffect(() => {
+    getWeatherInNewYork()
+      .then((res) => {
+        return res.json();
+      })
+      .then((data) => {
+        setData(data);
+      });
+  }, []);
+
+  return (
+    <div>
+      <WeatherWrapper>
+        <div>
+          <Title>{}</Title>
+          <Weather>
+            {`${data?.current.condition.text}`} {`${data?.current.temp_c}`}° C
+          </Weather>
+        </div>
+        <Image src={`https:${data?.current.condition.icon}`} alt="Сondition" />
+      </WeatherWrapper>
+
+      <Condition />
+    </div>
+  );
+};
 
 const WeatherWrapper = styled.div`
   display: flex;
@@ -36,7 +52,6 @@ const Weather = styled.div`
 `;
 
 const Image = styled.img`
-width: 231px;
-height: 186px;
+  width: 231px;
+  height: 186px;
 `;
-

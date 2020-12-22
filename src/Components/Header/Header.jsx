@@ -1,16 +1,32 @@
-import React, { Component } from "react";
+import React, { useEffect, useState } from "react";
 import styled from "@emotion/styled";
 
-export class Header extends Component {
-  render() {
-    return (
-      <HeaderStyled>
-        <Title>New York</Title>
-        <Time>6:24 PM EDT</Time>
-      </HeaderStyled>
-    );
-  }
-}
+const getWeatherInNewYork = () => {
+  return fetch(
+    "https://api.weatherapi.com/v1/current.json?key=3460e5548e274bdfb28150601201012&q&q=New_York"
+  );
+};
+
+export const Header = () => {
+  const [data, setData] = useState(null);
+
+  useEffect(() => {
+    getWeatherInNewYork()
+      .then((res) => {
+        return res.json();
+      })
+      .then((data) => {
+        setData(data);
+      });
+  }, []);
+
+  return (
+    <HeaderStyled>
+      <Title>{data?.location.name}</Title>
+      <Time>{data?.location.localtime}</Time>
+    </HeaderStyled>
+  );
+};
 
 const HeaderStyled = styled.header`
   text-align: center;

@@ -1,31 +1,47 @@
-import React, { Component } from "react";
+import React, { Component, useEffect, useState } from "react";
 import styled from "@emotion/styled";
 import Foliage from "../../assets/img/Foliage.png";
 import Path from "../../assets/img/Path.png";
 import PathLot from "../../assets/img/PathLot.png";
 
-export class Condition extends Component {
-  render() {
-    return (
-      <ConditionWrapper>
-        <ConditionItem>
-          <ConditionImg src={Foliage} />
-          <ConditionTitle>3mph</ConditionTitle>
-        </ConditionItem>
+const getWeatherInNewYork = () => {
+  return fetch(
+    "https://api.weatherapi.com/v1/current.json?key=3460e5548e274bdfb28150601201012&q&q=New_York"
+  );
+};
 
-        <ConditionItem>
-          <ConditionImg src={Path} />
-          <ConditionTitle>69%</ConditionTitle>
-        </ConditionItem>
+export const Condition = () => {
+  const [data, setData] = useState(null);
 
-        <ConditionItem>
-          <ConditionImg src={PathLot} />
-          <ConditionTitle>83%</ConditionTitle>
-        </ConditionItem>
-      </ConditionWrapper>
-    );
-  }
-}
+  useEffect(() => {
+    getWeatherInNewYork()
+      .then((res) => {
+        return res.json();
+      })
+      .then((data) => {
+        setData(data);
+      });
+  }, []);
+
+  return (
+    <ConditionWrapper>
+      <ConditionItem>
+        <ConditionImg src={Foliage} />
+        <ConditionTitle>{`${data?.current.wind_kph}`} kph</ConditionTitle>
+      </ConditionItem>
+
+      <ConditionItem>
+        <ConditionImg src={Path} />
+        <ConditionTitle>{`${data?.current.humidity}`} %</ConditionTitle>
+      </ConditionItem>
+
+      <ConditionItem>
+        <ConditionImg src={PathLot} />
+        <ConditionTitle>{`${data?.current.precip_mm}`} mm</ConditionTitle>
+      </ConditionItem>
+    </ConditionWrapper>
+  );
+};
 
 const ConditionWrapper = styled.div`
   display: flex;

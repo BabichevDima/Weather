@@ -4,6 +4,12 @@ import styled from "@emotion/styled";
 import { CurrentWeather } from "./Components/CurrentWeather"
 import { Forecast } from "./Components/Forecast"
 
+const city = {
+name: "NEW YORK",
+time: "6:24 PM EDT",
+}
+
+
 export class App extends Component {
   render() {
     return (

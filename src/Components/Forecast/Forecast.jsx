@@ -1,52 +1,48 @@
-import React, { Component } from "react";
+import React, { useState, useEffect } from "react";
 import styled from "@emotion/styled";
-import Sunny from "../../assets/img/Sunny.png";
-import SunnyClouds from "../../assets/img/sunny clouds.png";
-import Cloudy from "../../assets/img/cloudy.png";
-import SunCl from "../../assets/img/sun & clouds.png";
-import Clouds from "../../assets/img/Clouds.png";
 
-export class Forecast extends Component {
-  render() {
-    return (
-      <Weather>
-        <Title>Forecast</Title>
+const getWeatherInNewYork = () => {
+  return fetch(
+    "https://api.weatherapi.com/v1/forecast.json?key=3460e5548e274bdfb28150601201012&q&q&q=New_York&days=3"
+  );
+};
 
-        <DailyForcast>
-          <DailyItem>
-            <Day>Monday</Day>
-            <Img src={Sunny} alt="Sunny" />
-            <Temperature>26° C</Temperature>
-          </DailyItem>
+export const Forecast = () => {
+  const [data, setData] = useState(null);
 
-          <DailyItem>
-            <Day>Tuesday</Day>
-            <Img src={SunnyClouds} alt="Sunny" />
-            <Temperature>25° C</Temperature>
-          </DailyItem>
+  useEffect(() => {
+    getWeatherInNewYork()
+      .then((res) => {
+        return res.json();
+      })
+      .then((data) => {
+        setData(data);
+      });
+  }, []);
 
-          <DailyItem>
-            <Day>Wednesday</Day>
-            <Img src={Cloudy} alt="Sunny" />
-            <Temperature>21° C</Temperature>
-          </DailyItem>
+  const forcastDay = data ? data.forecast.forecastday: [];
+  console.log(
+    "🚀 ~ file: Forecast.jsx ~ line 24 ~ Forecast ~ numbers",
+    forcastDay
+  );
 
-          <DailyItem>
-            <Day>Thursday</Day>
-            <Img src={SunCl} alt="Sunny" />
-            <Temperature>22° C</Temperature>
-          </DailyItem>
+  const forcastWeatherDay = forcastDay.map((weatherDay) => (
+    <DailyItem>
+      <Day>{`${weatherDay.date}`}</Day>
+      <Img src={`https:${weatherDay.day.condition.icon}`} alt="Condition" />
+      <Temperature>{`${weatherDay.day.avgtemp_c}`}° C</Temperature>
+    </DailyItem>
+  ));
 
-          <DailyItem className="child">
-            <Day>Friday</Day>
-            <Img src={Clouds} alt="Sunny" />
-            <Temperature>19° C</Temperature>
-          </DailyItem>
-        </DailyForcast>
-      </Weather>
-    );
-  }
-}
+  return (
+    <Weather>
+      <Title>Forecast</Title>
+
+      <DailyForcast>{forcastWeatherDay}</DailyForcast>
+
+    </Weather>
+  );
+};
 
 const Weather = styled.div``;
 
