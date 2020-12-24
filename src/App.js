@@ -4,6 +4,7 @@ import styled from "@emotion/styled";
 import { CurrentWeather } from "./Components/CurrentWeather";
 import { Forecast } from "./Components/Forecast";
 import { Search } from "./Components/Search";
+import Sky from "./assets/img/sky.jpg";
 
 const getWeather = (coordinate = "New_York") => {
   return fetch(
@@ -36,7 +37,7 @@ export const App = () => {
         />
         <Header forecast={data} toggleSearch={toggleSearch} />
         <CurrentWeather forecast={data} />
-        <Forecast coordinate={coordinate}/>
+        <Forecast coordinate={coordinate} />
       </Wrapper>
     )
   );
@@ -44,7 +45,10 @@ export const App = () => {
 
 const Wrapper = styled.div`
   overflow: hidden;
-  background-color: #55676d;
+  background-image: url(${Sky});
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
   width: 414px;
   height: 830px;
   position: absolute;

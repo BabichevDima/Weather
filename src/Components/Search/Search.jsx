@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from "react";
 import styled from "@emotion/styled";
+import Symbol from "../../assets/img/18.png";
+import Water from "../../assets/img/5.jpg";
 
 const getSearchItems = (value) => {
   return fetch(
@@ -20,8 +22,8 @@ export const Search = ({ isSearchOpen, toggleSearch, setCoordinate }) => {
 
   return (
     <Wrap isSearchOpen={isSearchOpen}>
-      <CloseSearchButton onClick={() => toggleSearch(false)} />
-      <input type="text" onChange={onChangeHandler} />
+      <Img src={Symbol} onClick={() => toggleSearch(false)} />
+      <Input type="text" onChange={onChangeHandler} />
       {searchItems.map((item) => {
         return (
           <Item
@@ -49,21 +51,33 @@ const Wrap = styled.div`
     isSearchOpen ? "translateX(0%)" : "translateX(-100%)"};
   padding: 64px 24px;
   z-index: 1;
-  background-color: green;
+  background-image: url(${Water});
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
   transition: transform 300ms;
   box-sizing: border-box;
 `;
 
-const CloseSearchButton = styled.div`
+const Img = styled.img`
   position: absolute;
   height: 30px;
   width: 30px;
-  background-color: #fff;
   top: 30px;
   right: 30px;
+  cursor: pointer;
+  &:hover {
+    transition: 1s;
+    transform: translateX(-40%);
+  }
 `;
 
 const Item = styled.div`
   padding: 8px;
   cursor: pointer;
+`;
+
+const Input = styled.input`
+  cursor: pointer;
+  width: 380px;
 `;

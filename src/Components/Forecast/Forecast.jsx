@@ -26,7 +26,7 @@ export const Forecast = ({coordinate}) => {
     <Weather>
       <Title>Forecast</Title>
 
-      <DailyForcast>
+      <DailyForecast>
         {forecastDay.map((weatherDay) => (
           <DailyItem key={weatherDay.date_epoch}>
             <Day>{`${weatherDay.date}`}</Day>
@@ -37,7 +37,7 @@ export const Forecast = ({coordinate}) => {
             <Temperature>{`${weatherDay.day.avgtemp_c}`}° C</Temperature>
           </DailyItem>
         ))}
-      </DailyForcast>
+      </DailyForecast>
 
     </Weather>
   );
@@ -52,7 +52,7 @@ const Title = styled.div`
   margin-bottom: 8px;
 `;
 
-const DailyForcast = styled.div``;
+const DailyForecast = styled.div``;
 
 const DailyItem = styled.div`
   display: flex;
