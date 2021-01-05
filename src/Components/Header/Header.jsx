@@ -1,14 +1,28 @@
 import React from "react";
 import styled from "@emotion/styled";
 import Mappin from "../../assets/img/mappin.png";
+import { connect } from "react-redux";
+import { toggleSearch } from "../../store/actions";
 
-export const Header = ({ forecast, toggleSearch }) => (
-  <HeaderStyled>
-    <Img src={Mappin} onClick={() => toggleSearch(true)} />
-    <Title>{forecast.location.name}</Title>
-    <Time>{forecast.location.localtime}</Time>
-  </HeaderStyled>
-);
+const HeaderComponent = ({ forecast, toggleSearch, user, changeUser }) => {
+  console.log("🚀 ~ file: Header.jsx ~ line 16 ~ user", user);
+  return (
+    <HeaderStyled>
+      <Img src={Mappin} onClick={() => toggleSearch(true)} />
+      <Title>{forecast.location.name}</Title>
+      <Time>{forecast.location.localtime}</Time>
+      <button onClick={() => changeUser("Dima")}>changeUser</button>
+    </HeaderStyled>
+  );
+};
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    toggleSearch: () => dispatch(toggleSearch()),
+  };
+};
+
+export const Header = connect(null, mapDispatchToProps)(HeaderComponent);
 
 const HeaderStyled = styled.header`
   position: relative;

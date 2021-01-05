@@ -4,11 +4,7 @@ import Foliage from "../../assets/img/Foliage.png";
 import Path from "../../assets/img/Path.png";
 import PathLot from "../../assets/img/PathLot.png";
 
-const getWeatherInNewYork = () => {
-  return fetch(
-    "https://api.weatherapi.com/v1/current.json?key=3460e5548e274bdfb28150601201012&q&q=New_York"
-  );
-};
+
 
 export const Condition = ({forecast}) => (
     <ConditionWrapper>

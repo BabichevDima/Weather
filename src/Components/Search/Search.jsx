@@ -1,7 +1,9 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import styled from "@emotion/styled";
 import Symbol from "../../assets/img/18.png";
 import Water from "../../assets/img/5.jpg";
+import { connect } from "react-redux";
+import { toggleSearch } from "../../store/actions";
 
 const getSearchItems = (value) => {
   return fetch(
@@ -9,7 +11,7 @@ const getSearchItems = (value) => {
   );
 };
 
-export const Search = ({ isSearchOpen, toggleSearch, setCoordinate }) => {
+const SearchComponent = ({ isSearchOpen, toggleSearch, setCoordinate }) => {
   const [searchItems, setItems] = useState([]);
 
   const onChangeHandler = (e) =>
@@ -40,6 +42,21 @@ export const Search = ({ isSearchOpen, toggleSearch, setCoordinate }) => {
     </Wrap>
   );
 };
+
+const mapStateToProps = (store) => ({
+  isSearchOpen: store.isSearchOpen,
+});
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    toggleSearch: () => dispatch(toggleSearch())
+  };
+};
+
+export const Search = connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(SearchComponent);
 
 const Wrap = styled.div`
   position: absolute;

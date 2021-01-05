@@ -14,7 +14,6 @@ const getWeather = (coordinate = "New_York") => {
 
 export const App = () => {
   const [data, setData] = useState(null);
-  const [isSearchOpen, toggleSearch] = useState(false);
   const [coordinate, setCoordinate] = useState();
 
   useEffect(() => {
@@ -31,11 +30,9 @@ export const App = () => {
     data && (
       <Wrapper>
         <Search
-          isSearchOpen={isSearchOpen}
-          toggleSearch={toggleSearch}
           setCoordinate={setCoordinate}
         />
-        <Header forecast={data} toggleSearch={toggleSearch} />
+        <Header forecast={data} />
         <CurrentWeather forecast={data} />
         <Forecast coordinate={coordinate} />
       </Wrapper>
